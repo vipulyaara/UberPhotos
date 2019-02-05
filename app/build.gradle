@@ -1,0 +1,46 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    compileSdkVersion build_versions.compile_sdk as int
+    defaultConfig {
+        applicationId "com.uber.user"
+        minSdkVersion build_versions.min_sdk as int
+        targetSdkVersion build_versions.target_sdk as int
+        vectorDrawables.useSupportLibrary = true
+        versionCode 2
+        versionName "1.0"
+        proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+
+    implementation deps.androidx.appcompat
+    implementation deps.androidx.material
+    implementation deps.androidx.recyclerview
+    implementation deps.androidx.constraint_layout
+
+    implementation deps.kotlin.stdlib_jdk7
+
+    androidTestImplementation deps.testing.robo_electric
+    androidTestImplementation deps.testing.mockito_kotlin
+    androidTestImplementation deps.testing.powermock
+    androidTestImplementation deps.espresso.core
+    testImplementation deps.testing.mockito_kotlin
+    testImplementation deps.testing.junit
+    testImplementation deps.testing.junit_runner
+    
+    implementation project(':data')
+}
+
+repositories {
+    google()
+}

@@ -1,0 +1,16 @@
+package com.uber.user
+
+import com.uber.data.mapper.PhotosResponseMapper
+import com.uber.user.data.PhotosDataSource
+import com.uber.user.data.PhotosRepository
+
+/**
+ * @author Vipul Kumar; dated 04/02/19.
+ *
+ * The simplest dependency provider.
+ */
+object DependencyProvider {
+    val photoResponseMapper = PhotosResponseMapper()
+    private val photoDataSource = PhotosDataSource(mapper = photoResponseMapper)
+    val photoRepository = PhotosRepository(photoDataSource)
+}

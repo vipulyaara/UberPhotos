@@ -1,0 +1,126 @@
+/**
+ * Shared file between builds so that they can all use the same dependencies and
+ * maven repositories.
+ **/
+ext.deps = [:]
+def versions = [:]
+versions.junit = "4.12"
+versions.mockito = "1.10.8"
+versions.powermock = "1.6.5"
+
+versions.android_gradle_plugin = "3.3.0"
+
+versions.kotlin = "1.3.0"
+
+versions.ktx = "1.0.0"
+versions.ktx_nav = "1.0.0-alpha01"
+versions.ktx_lifecycle = "2.0.0-alpha1"
+
+versions.testing = "1.1.0"
+versions.support = "1.0.0"
+versions.lifecycle = "2.0.0"
+versions.constraint_layout = "2.0.0-alpha2"
+
+versions.espresso = "3.0.1"
+versions.mockwebserver = "3.8.1"
+versions.mockito = "2.7.19"
+versions.mockito_kotlin = "2.0.0-RC3"
+versions.mockito_all = "1.10.19"
+versions.junit = "4.12"
+versions.junit_runner = "1.1.1"
+versions.hamcrest = "1.3"
+versions.robo_electric = "4.0.2"
+def deps = [:]
+
+def androidx = [:]
+androidx.leanback = "androidx.leanback:leanback:${versions.support}"
+androidx.appcompat = "androidx.appcompat:appcompat:${versions.support}"
+androidx.cardview = "androidx.cardview:cardview:${versions.support}"
+androidx.material = "com.google.android.material:material:${versions.support}"
+androidx.recyclerview = "androidx.recyclerview:recyclerview:${versions.support}"
+androidx.fragment = "androidx.fragment:fragment:${versions.support}"
+androidx.constraint_layout = "androidx.constraintlayout:constraintlayout:${versions.constraint_layout}"
+androidx.work_manager = "android.arch.work:work-runtime:${versions.work_manager}"
+androidx.testing = "androidx.test:core:$versions.testing"
+deps.androidx = androidx
+
+def ktx = [:]
+ktx.core = "androidx.core:core-ktx:${versions.ktx}"
+ktx.fragment = "androidx.fragment:fragment-ktx:${versions.ktx}"
+ktx.palette = "androidx.palette:palette-ktx:${versions.ktx}"
+ktx.sqlite = "androidx.sqlite:sqlite-ktx:${versions.ktx}"
+ktx.collection = "androidx.collection:collection-ktx:${versions.ktx}"
+ktx.viewmodel = "androidx.lifecycle:lifecycle-viewmodel-ktx:${versions.ktx_lifecycle}"
+ktx.reactive_streams = "androidx.lifecycle:lifecycle-reactivestreams-ktx:${versions.ktx_lifecycle}"
+ktx.navigation_common = "android.arch.navigation:navigation-common-ktx:${versions.ktx_nav}"
+ktx.navigation_fragment = "android.arch.navigation:navigation-fragment-ktx:${versions.ktx_nav}"
+ktx.navigation_runtime = "android.arch.navigation:navigation-runtime-ktx:${versions.ktx_nav}"
+ktx.navigation_testing = "android.arch.navigation:navigation-testing-ktx:${versions.ktx_nav}"
+ktx.navigation_ui = "android.arch.navigation:navigation-ui-ktx:${versions.ktx_nav}"
+androidx.ktx = ktx
+
+def testing = [:]
+testing.powermock = "org.powermock:powermock:$versions.powermock"
+testing.powermockModule = "org.powermock:powermock-module-junit4:$versions.powermock"
+testing.powermockApi = "org.powermock:powermock-api-mockito:$versions.powermock"
+testing.mockito = "org.mockito:mockito-core:$versions.mockito"
+testing.junit = "junit:junit:$versions.junit"
+testing.mock_web_server = "com.squareup.okhttp3:mockwebserver:$versions.mockwebserver"
+testing.mockito_core = "org.mockito:mockito-core:$versions.mockito"
+testing.mockito_all = "org.mockito:mockito-all:$versions.mockito_all"
+testing.mockito_kotlin = "com.nhaarman.mockitokotlin2:mockito-kotlin:$versions.mockito_kotlin"
+testing.hamcrest = "org.hamcrest:hamcrest-all:$versions.hamcrest"
+testing.robo_electric = "org.robolectric:robolectric:$versions.robo_electric"
+testing.junit_runner = "androidx.test:runner:$versions.junit_runner"
+deps.testing = testing
+
+def kotlin = [:]
+kotlin.stdlib_jre7 = "org.jetbrains.kotlin:kotlin-stdlib-jre7:$versions.kotlin"
+kotlin.stdlib_jdk7 = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$versions.kotlin"
+kotlin.test = "org.jetbrains.kotlin:kotlin-test-junit:$versions.kotlin"
+kotlin.plugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlin"
+kotlin.extensions_plugin = "org.jetbrains.kotlin:kotlin-android-extensions:$versions.kotlin"
+deps.kotlin = kotlin
+
+def mockito = [:]
+mockito.core = "org.mockito:mockito-core:$versions.mockito"
+mockito.all = "org.mockito:mockito-all:$versions.mockito_all"
+deps.mockito = mockito
+
+def espresso = [:]
+espresso.core = "com.android.support.test.espresso:espresso-core:$versions.espresso"
+espresso.contrib = "com.android.support.test.espresso:espresso-contrib:$versions.espresso"
+espresso.intents = "com.android.support.test.espresso:espresso-intents:$versions.espresso"
+deps.espresso = espresso
+
+deps.file_tree =  fileTree(include: ['*.jar'], dir: 'libs')
+deps.multidex =  "com.android.support:multidex:$versions.multi_dex"
+deps.android_gradle_plugin = "com.android.tools.build:gradle:$versions.android_gradle_plugin"
+
+ext.deps = deps
+
+def build_versions = [:]
+build_versions.min_sdk = 21
+build_versions.compile_sdk = 28
+build_versions.target_sdk = 28
+build_versions.build_tools = "28.0.2"
+ext.build_versions = build_versions
+
+def addRepos(RepositoryHandler handler) {
+    handler.google()
+    handler.mavenCentral()
+    handler.jcenter()
+    handler.maven { url "https://jitpack.io" }
+    handler.maven {
+        url "https://maven.google.com"
+    }
+    handler.maven {
+        url "https://mvnrepository.com/artifact/org.apache.commons/commons-lang3"
+    }
+    handler.maven {
+        url "'https://maven.fabric.io/public'"
+    }
+}
+
+ext.addRepos = this.&addRepos
+ext.addLibraryConfig = this.&addLibraryConfig
