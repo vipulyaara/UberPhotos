@@ -1,5 +1,8 @@
 # Uber Photos
 A small application that shows how to implement networking and image caching in a scalable way without using any libraries.
+<br>
+<br>
+Find the apk here [uber-photos-apk.zip](https://github.com/vipulyaara/UberPhotos/files/2832496/app-debug.apk.zip)
 
 ### Architecture
 It is a very simplified version of MVVM. The fragment interacts with viewModel. I refrained from making the viewModel reactive as I thought the whole point of no-library-use was to to see how we can handle basics of OOPs.
