@@ -41,7 +41,6 @@ androidx.recyclerview = "androidx.recyclerview:recyclerview:${versions.support}"
 androidx.fragment = "androidx.fragment:fragment:${versions.support}"
 androidx.constraint_layout = "androidx.constraintlayout:constraintlayout:${versions.constraint_layout}"
 androidx.work_manager = "android.arch.work:work-runtime:${versions.work_manager}"
-androidx.testing = "androidx.test:core:$versions.testing"
 deps.androidx = androidx
 
 def ktx = [:]
@@ -72,6 +71,8 @@ testing.mockito_kotlin = "com.nhaarman.mockitokotlin2:mockito-kotlin:$versions.m
 testing.hamcrest = "org.hamcrest:hamcrest-all:$versions.hamcrest"
 testing.robo_electric = "org.robolectric:robolectric:$versions.robo_electric"
 testing.junit_runner = "androidx.test:runner:$versions.junit_runner"
+testing.core = "androidx.test:core:$versions.testing"
+testing.ext = "androidx.test.ext:junit:$versions.testing"
 deps.testing = testing
 
 def kotlin = [:]

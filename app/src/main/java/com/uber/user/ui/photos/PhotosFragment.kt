@@ -26,7 +26,7 @@ class PhotosFragment : Fragment() {
     private val photoAdapter = PhotoAdapter()
     private var query = "kittens" // default search keyword
     private val initialPage = 1
-    private val incrementCoeffient = 1
+    private val incrementCoefficient = 1
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -59,7 +59,7 @@ class PhotosFragment : Fragment() {
 
             addOnScrollListener(EndlessRecyclerViewScrollListener(gridLayoutManager) { item, _ ->
                 if (!photoAdapter.hasExtraRow()) {
-                    fetchPhotos(item / photosPerPage + incrementCoeffient)
+                    fetchPhotos(item / photosPerPage + incrementCoefficient)
                 }
             })
         }

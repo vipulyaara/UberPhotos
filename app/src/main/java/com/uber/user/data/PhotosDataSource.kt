@@ -2,10 +2,10 @@ package com.uber.user.data
 
 import com.uber.data.api.Response
 import com.uber.data.fetchImagesRequest
-import com.uber.data.uberNetworking
 import com.uber.data.mapper.ResponseMapper
 import com.uber.data.model.Photos
 import com.uber.user.DependencyProvider.photoResponseMapper
+import com.uber.user.DependencyProvider.uberNetworking
 
 /**
  * @author Vipul Kumar; dated 30/01/19.

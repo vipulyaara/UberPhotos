@@ -24,10 +24,13 @@ dependencies {
 
     implementation deps.kotlin.stdlib_jdk7
 
-    testImplementation deps.testing.powermock
-    testImplementation deps.testing.mockito_kotlin
-    testImplementation deps.testing.junit
-    testImplementation deps.testing.junit_runner
+//    androidTestImplementation deps.testing.robo_electric
+//    testImplementation deps.testing.mockito_kotlin
+//    androidTestImplementation deps.testing.powermock
+//    testImplementation deps.testing.core
+//    androidTestImplementation deps.testing.ext
+
+//    testImplementation "org.mockito:mockito-android:2.24.0"
 }
 
 repositories {

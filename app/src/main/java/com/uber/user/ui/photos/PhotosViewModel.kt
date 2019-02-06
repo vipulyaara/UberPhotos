@@ -13,9 +13,9 @@ import com.uber.user.ui.common.BaseViewModel
  *
  * ViewModel to fetch photos and expose the result to fragments.
  */
-class PhotosViewModel : BaseViewModel() {
+open class PhotosViewModel : BaseViewModel() {
 
-    internal fun fetchPhotos(
+    fun fetchPhotos(
         query: String,
         page: Int,
         success: (success: Success<Photos>) -> Unit,

@@ -29,7 +29,3 @@ fun fetchImagesUrl(query: String, page: Int) = baseUrl +
 
 fun fetchImagesRequest(query: String, page: Int) =
     Request(url = fetchImagesUrl(query, page))
-
-val uberNetworking = UberNetworking().apply {
-    addInterceptor(LoggingInterceptor())
-}
