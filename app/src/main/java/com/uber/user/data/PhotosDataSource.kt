@@ -9,6 +9,8 @@ import com.uber.user.DependencyProvider.photoResponseMapper
 
 /**
  * @author Vipul Kumar; dated 30/01/19.
+ *
+ * Data source responsible for fetching photos.
  */
 class PhotosDataSource {
     var mapper: ResponseMapper<Photos> = photoResponseMapper

@@ -79,10 +79,11 @@ class PhotosFragment : Fragment() {
             query,
             page,
             {
-                showInUi(it.data)
                 photoAdapter.setNetworkState(NetworkState.LOADED)
+                showInUi(it.data)
             },
             {
+                photoAdapter.setNetworkState(NetworkState.LOADED)
                 Toast.makeText(context, it.exception.message, Toast.LENGTH_SHORT).show()
             } // do something with error
         )

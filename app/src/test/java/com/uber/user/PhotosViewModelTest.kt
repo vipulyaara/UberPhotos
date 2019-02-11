@@ -1,16 +1,12 @@
 package com.uber.user
 
-import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
-import com.uber.data.AppExecutors
 import com.uber.data.AppExecutors.mainThread
 import com.uber.data.api.ErrorResponse
-import com.uber.data.api.Response
 import com.uber.data.api.Success
 import com.uber.data.model.Photos
-import com.uber.user.DependencyProvider.photoDataSource
 import com.uber.user.DependencyProvider.photoRepository
 import com.uber.user.data.PhotosDataSource
 import com.uber.user.data.PhotosRepository
@@ -19,7 +15,6 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
-import org.mockito.Mockito
 import java.util.concurrent.Executor
 
 /**

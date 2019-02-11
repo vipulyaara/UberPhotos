@@ -10,6 +10,8 @@ import com.uber.data.model.Photos
 
 /**
  * @author Vipul Kumar; dated 30/01/19.
+ *
+ * Data source responsible for fetching photos from data source.
  */
 class PhotosRepository(
     var photosDataSource: PhotosDataSource // var for testing
