@@ -13,8 +13,8 @@ import java.net.URL
  * It is written with [readText] from kotlin standard library;
  * rather than writing boilerplate for parsing the stream and reader.
  */
-class UberNetworking {
-    private var interceptors = arrayListOf<Interceptor>()
+open class UberNetworking {
+    var interceptors = arrayListOf<Interceptor>()
 
     fun addInterceptor(interceptor: Interceptor) {
         interceptors.add(interceptor)

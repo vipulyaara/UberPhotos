@@ -1,22 +1,20 @@
 package com.uber.user
 
+import com.nhaarman.mockitokotlin2.mock
+import com.nhaarman.mockitokotlin2.verify
+import com.nhaarman.mockitokotlin2.whenever
+import com.uber.data.AppExecutors
 import com.uber.data.api.ErrorResponse
-import com.uber.data.api.Response
 import com.uber.data.api.Success
 import com.uber.data.model.Photos
 import com.uber.user.DependencyProvider.photoResponseMapper
 import com.uber.user.data.PhotosDataSource
 import com.uber.user.data.PhotosRepository
-import org.junit.Assert
-import org.junit.Test
 import org.junit.Before
+import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
-import org.mockito.ArgumentCaptor
-import org.mockito.ArgumentMatchers.any
-import org.mockito.Mockito
-import org.mockito.Mockito.mock
-import org.mockito.Mockito.`when`
+import java.util.concurrent.Executor
 
 /**
  * @author Vipul Kumar; dated 30/01/19.
@@ -28,45 +26,38 @@ class PhotosRepositoryTest {
     private val keyword = "kitten"
     private val page = 1
 
-    /**
-     * Returns Mockito.any() as nullable type to avoid java.lang.IllegalStateException when
-     * null is returned.
-     */
-    fun <T> any(): T = Mockito.any<T>()
-
     @Before
     fun setup() {
-        dataSource = mock(PhotosDataSource::class.java)
-//        `when`(dataSource.getMappers()).thenReturn(photoResponseMapper)
+        dataSource = mock()
+        dataSource.mapper = photoResponseMapper
         repository = PhotosRepository(dataSource)
+        AppExecutors.mainThread = Executor { it.run() }
     }
 
     @Test
-    fun getData_withSuccess() {
-        // When requesting the photos
-//        val result = photosResponse
-        // Given that the dataSource responds with success
-        `when`(dataSource.fetchPhotos(keyword, page)).thenReturn(photosResponse)
+    fun `get data with success`() {
+        val photosResponseSuccess = Success(photos)
 
-        val result = repository.fetchPhotos(keyword, page)
+        // return success when called
+        whenever(dataSource.fetchPhotos(keyword, page)).thenReturn(photosResponseSuccess)
+        val mockSuccess = mock<(Success<Photos>) -> Unit>()
 
-        // Then there's one request to the dataSource
-//        Mockito.verify(dataSource).fetchPhotos(keyword, page)
-        // Then the correct set of photos is returned
-        Assert.assertEquals(Success(photos), result)
+        repository.fetchPhotos(keyword, page, mockSuccess, { })
+
+        // verify interaction
+        verify(mockSuccess).invoke(photosResponseSuccess)
     }
 
     @Test
-    fun getData_withError() {
-        val exception = RuntimeException()
-        val errorResult: Response<Photos> = ErrorResponse(exception)
-        `when`(dataSource.fetchPhotos(keyword, 1)).thenReturn(errorResult)
+    fun `get data with error`() {
+        val errorResponse = ErrorResponse<Photos>(Exception())
+        // return error when called
+        whenever(dataSource.fetchPhotos(keyword, page)).thenReturn(errorResponse)
 
-        val result = repository.fetchPhotos(keyword, page)
+        val mockError = mock<(ErrorResponse<Photos>) -> Unit>()
+        repository.fetchPhotos(keyword, page, {}, mockError)
 
-        // Then there's one request to the dataSource
-//        Mockito.verify(dataSource).fetchPhotos(keyword, page)
-        // Then the correct set of photos is returned
-        Assert.assertEquals(errorResult, result)
+        // verify interaction
+        verify(mockError).invoke(errorResponse)
     }
 }

@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import com.uber.data.model.Photos
 import com.uber.data.photosPerPage
+import com.uber.user.DependencyProvider.photoRepository
 import com.uber.user.extensions.hideIme
 import com.uber.user.widget.EndlessRecyclerViewScrollListener
 import kotlinx.android.synthetic.main.fragment_photos.*
@@ -22,7 +23,7 @@ import kotlinx.android.synthetic.main.fragment_photos.*
  * It mostly interacts with [PhotoAdapter]
  */
 class PhotosFragment : Fragment() {
-    private val viewModel by lazy { PhotosViewModel() }
+    private val viewModel by lazy { PhotosViewModel(photosRepository = photoRepository) }
     private val photoAdapter = PhotoAdapter()
     private var query = "kittens" // default search keyword
     private val initialPage = 1

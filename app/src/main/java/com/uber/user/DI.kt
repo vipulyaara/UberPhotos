@@ -13,10 +13,6 @@ import com.uber.user.data.PhotosRepository
  */
 object DependencyProvider {
     val photoResponseMapper = PhotosResponseMapper()
-    private val photoDataSource = PhotosDataSource(mapper = photoResponseMapper)
+    val photoDataSource = PhotosDataSource()
     val photoRepository = PhotosRepository(photoDataSource)
-
-    val uberNetworking = UberNetworking().apply {
-        addInterceptor(LoggingInterceptor())
-    }
 }

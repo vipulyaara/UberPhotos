@@ -1,5 +1,6 @@
 package com.uber.user
 
+import com.uber.data.api.ErrorResponse
 import com.uber.data.api.Success
 import com.uber.data.model.Photo
 import com.uber.data.model.Photos
@@ -26,4 +27,6 @@ val photos = Photos(
     photo = photoList()
 )
 
-val photosResponse = Success(photos)
+val photosResponseSuccess = Success(photos)
+
+val photosResponseError = ErrorResponse<Photos>(RuntimeException("unknown exception"))

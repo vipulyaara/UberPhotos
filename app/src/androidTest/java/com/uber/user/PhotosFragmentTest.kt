@@ -17,7 +17,6 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.ArgumentMatchers
 import org.mockito.Mockito.mock
 import org.mockito.Mockito.verify
 
@@ -29,7 +28,11 @@ class PhotosFragmentTest {
 
     @Rule
     @JvmField
-    val activityRule = ActivityTestRule(MainActivity::class.java, true, true)
+    val activityRule = ActivityTestRule(
+        MainActivity::class.java,
+        true,
+        true
+    )
 
     var fragment = PhotosFragment()
     lateinit var viewModel: PhotosViewModel
@@ -61,10 +64,9 @@ class PhotosFragmentTest {
         Thread.sleep(4000) // Wait network to finish call the ugly way
 
         onView(withId(R.id.rvPhotos)).perform(
-            RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(
-                9
-            )
+            RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(9)
         )
+
         onView(listMatcher().atPosition(9)).check(matches(isDisplayed()))
         verify<PhotosViewModel>(viewModel).fetchPhotos("kitten", 1, {}, {})
     }

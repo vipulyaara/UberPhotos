@@ -3,7 +3,7 @@ package com.uber.data.dali
 import android.app.ActivityManager
 import android.content.Context
 import android.graphics.Bitmap
-import androidx.collection.LruCache
+import android.util.LruCache
 
 /**
  * @author Vipul Kumar; dated 04/02/19.
@@ -17,12 +17,13 @@ class ImageCache(maxSize: Int) : LruCache<String, Bitmap>(maxSize) {
     }
 
     companion object {
+        private const val cacheSizeCoefficient = 1
         private var instance: ImageCache? = null
 
         operator fun get(context: Context?): ImageCache {
             if (instance == null) {
                 val am = context?.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
-                val memClassBytes = (am.memoryClass * 1024 * 1024).toFloat()
+                val memClassBytes = (am.memoryClass * 1024 * 1024 * cacheSizeCoefficient).toFloat()
                 instance = ImageCache(Math.round(memClassBytes))
             }
             return instance as ImageCache
