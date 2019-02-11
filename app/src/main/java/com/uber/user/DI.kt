@@ -14,5 +14,5 @@ import com.uber.user.data.PhotosRepository
 object DependencyProvider {
     val photoResponseMapper = PhotosResponseMapper()
     val photoDataSource = PhotosDataSource()
-    val photoRepository = PhotosRepository(photoDataSource)
+    var photoRepository = PhotosRepository(photoDataSource)
 }

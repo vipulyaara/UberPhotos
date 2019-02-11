@@ -25,30 +25,35 @@ dependencies {
     implementation(AndroidX.recyclerView)
     implementation(AndroidX.constraintLayout)
 
+    androidTestImplementation(AndroidX.annotation)
     androidTestImplementation(AndroidX.Test.junit)
     androidTestImplementation(AndroidX.Test.rules)
     androidTestImplementation(AndroidX.Espresso.core)
     androidTestImplementation(AndroidX.Espresso.intents)
+    androidTestImplementation(AndroidX.Espresso.contrib)
     androidTestImplementation(Testing.Mockito.kotlin)
+    androidTestImplementation(JUnit.dependency)
+    androidTestImplementation(AndroidX.Arch.testing)
+    androidTestImplementation("org.mockito:mockito-android:2.24.0")
 
+    testImplementation(AndroidX.annotation)
+    testImplementation(AndroidX.Test.junit)
+    testImplementation(AndroidX.Arch.testing)
     testImplementation(Testing.Mockito.kotlin)
+    testImplementation(JUnit.dependency)
 }
 
 configure<BaseExtension> {
     compileSdkVersion(Kafka.compileSdkVersion)
 
     defaultConfig {
-        applicationId = "com.user.uber"
+        applicationId = "com.uber.user"
         minSdkVersion(Kafka.minSdkVersion)
         targetSdkVersion(Kafka.compileSdkVersion)
         multiDexEnabled = true
         versionCode = 1
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-    }
-
-    dataBinding {
-        this.isEnabled = true
     }
 
     sourceSets {
@@ -68,65 +73,3 @@ configure<BaseExtension> {
         exclude("META-INF/NOTICE.txt")
     }
 }
-
-
-
-
-
-//apply plugin: 'com.android.application'
-//apply plugin: 'kotlin-android'
-//apply plugin: 'kotlin-android-extensions'
-//
-//android {
-//    compileSdkVersion build_versions.compile_sdk as int
-//    defaultConfig {
-//        applicationId "com.uber.user"
-//        minSdkVersion build_versions.min_sdk as int
-//        targetSdkVersion build_versions.target_sdk as int
-//        vectorDrawables.useSupportLibrary = true
-//        versionCode 2
-//        versionName "1.0"
-//        proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-//        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-//    }
-//    buildTypes {
-//        release {
-//            minifyEnabled false
-//            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-//        }
-//    }
-//    compileOptions {
-//        sourceCompatibility JavaVersion.VERSION_1_8
-//        targetCompatibility JavaVersion.VERSION_1_8
-//    }
-//}
-
-
-//testImplementation deps.testing.mockito_kotlin
-////    testImplementation deps.mockito.core, { exclude group: 'net.bytebuddy' }
-//        testImplementation deps.testing.junit
-////    testImplementation "net.bytebuddy:byte-buddy:1.9.7"
-////    testImplementation "net.bytebuddy:byte-buddy-agent:1.9.7"
-////    testImplementation "org.objenesis:objenesis:2.6"
-////    testImplementation "org.mockito:mockito-android:2.24.0"
-//
-//        androidTestImplementation deps.mockito.core, { exclude group: 'net.bytebuddy' }
-//androidTestImplementation "net.bytebuddy:byte-buddy:1.9.7"
-//androidTestImplementation "org.objenesis:objenesis:2.6"
-//androidTestImplementation "org.mockito:mockito-android:2.24.0"
-//
-//androidTestImplementation deps.androidx.appcompat
-//        androidTestImplementation deps.androidx.recyclerview
-//        androidTestImplementation deps.androidx.cardview
-//        androidTestImplementation deps.androidx.material
-//
-//        androidTestImplementation deps.espresso.intents
-//
-//        androidTestImplementation(deps.espresso.core, {
-//            exclude group: 'com.android.support', module: 'support-annotations'
-//            exclude group: 'com.google.code.findbugs', module: 'jsr305'
-//        })
-//androidTestImplementation(deps.espresso.contrib, {
-//    exclude group: 'com.android.support', module: 'support-annotations'
-//    exclude group: 'com.google.code.findbugs', module: 'jsr305'
-//})

@@ -21,6 +21,11 @@ abstract class BaseRecyclerAdapter<T> : RecyclerView.Adapter<RecyclerView.ViewHo
         replace(if (items == null) update else items?.toMutableList()?.also { it.addAll(update) })
     }
 
+    fun clear() {
+        items = null
+        notifyDataSetChanged()
+    }
+
     @SuppressLint("StaticFieldLeak")
     fun replace(update: List<T>?) {
         dataVersion++

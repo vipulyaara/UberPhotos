@@ -4,6 +4,7 @@ import android.util.Log
 import com.uber.data.api.ErrorResponse
 import com.uber.data.api.Success
 import com.uber.data.model.Photos
+import com.uber.user.DependencyProvider.photoRepository
 import com.uber.user.data.PhotosRepository
 import com.uber.user.ui.common.BaseViewModel
 
@@ -12,7 +13,7 @@ import com.uber.user.ui.common.BaseViewModel
  *
  * ViewModel to fetch photos and expose the result to fragments.
  */
-open class PhotosViewModel(private val photosRepository: PhotosRepository) : BaseViewModel() {
+open class PhotosViewModel : BaseViewModel() {
 
     fun fetchPhotos(
         query: String,
@@ -20,7 +21,7 @@ open class PhotosViewModel(private val photosRepository: PhotosRepository) : Bas
         success: (success: Success<Photos>) -> Unit,
         error: (error: ErrorResponse<Photos>) -> Unit
     ) {
-        photosRepository.fetchPhotos(
+        photoRepository.fetchPhotos(
             query,
             page,
             {

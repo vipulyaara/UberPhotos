@@ -10,6 +10,7 @@ import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.rule.ActivityTestRule
 import androidx.test.runner.AndroidJUnit4
+import com.nhaarman.mockitokotlin2.mock
 import com.uber.user.ui.MainActivity
 import com.uber.user.ui.photos.PhotosFragment
 import com.uber.user.ui.photos.PhotosViewModel
@@ -17,7 +18,6 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.Mockito.mock
 import org.mockito.Mockito.verify
 
 /**
@@ -40,7 +40,7 @@ class PhotosFragmentTest {
     @Before
     fun setUp() {
         fragment = PhotosFragment()
-        viewModel = mock(PhotosViewModel::class.java)
+        viewModel = mock()
     }
 
     @Test

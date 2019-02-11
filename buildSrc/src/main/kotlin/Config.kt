@@ -87,6 +87,7 @@ object AndroidX {
         const val version = "3.1.0"
         const val core = "androidx.test.espresso:espresso-core:$version"
         const val intents = "androidx.test.espresso:espresso-intents:$version"
+        const val contrib = "androidx.test.espresso:espresso-contrib:$version"
     }
 
     // Testing dependencies

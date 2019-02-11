@@ -23,7 +23,7 @@ import kotlinx.android.synthetic.main.fragment_photos.*
  * It mostly interacts with [PhotoAdapter]
  */
 class PhotosFragment : Fragment() {
-    private val viewModel by lazy { PhotosViewModel(photosRepository = photoRepository) }
+    private val viewModel by lazy { PhotosViewModel() }
     private val photoAdapter = PhotoAdapter()
     private var query = "kittens" // default search keyword
     private val initialPage = 1
@@ -46,6 +46,7 @@ class PhotosFragment : Fragment() {
         etSearch.setOnEditorActionListener(TextView.OnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 query = etSearch.text.toString()
+                photoAdapter.clear()
                 fetchPhotos(initialPage)
                 etSearch.hideIme()
                 return@OnEditorActionListener true

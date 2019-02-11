@@ -5,10 +5,14 @@ import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
 import com.uber.data.AppExecutors
+import com.uber.data.AppExecutors.mainThread
+import com.uber.data.api.ErrorResponse
 import com.uber.data.api.Response
 import com.uber.data.api.Success
 import com.uber.data.model.Photos
 import com.uber.user.DependencyProvider.photoDataSource
+import com.uber.user.DependencyProvider.photoRepository
+import com.uber.user.data.PhotosDataSource
 import com.uber.user.data.PhotosRepository
 import com.uber.user.ui.photos.PhotosViewModel
 import org.junit.Before
@@ -27,26 +31,40 @@ class PhotosViewModelTest {
     private val keyword = "kitten"
     private val page = 1
     private lateinit var viewModel: PhotosViewModel
-    private lateinit var photosRepository: PhotosRepository
+    private lateinit var dataSource: PhotosDataSource
 
     @Before
     fun setup() {
-        AppExecutors.mainThread = Executor { it.run() }
-        photosRepository = mock {
-//            onGeneric { fetchPhotos(keyword, page) } doReturn photosResponseSuccess
-        }
-        photosRepository.photosDataSource = photoDataSource
-        viewModel = PhotosViewModel(photosRepository)
+        dataSource = mock()
+        photoRepository = PhotosRepository(dataSource)
+        viewModel = PhotosViewModel()
+        mainThread = Executor { it.run() }
     }
 
     @Test
-    fun `success response in viewmodel`() {
+    fun `get view model data with success`() {
+        val photosResponseSuccess = Success(photos)
+
+        // return success when called
+        whenever(dataSource.fetchPhotos(keyword, page)).thenReturn(photosResponseSuccess)
         val mockSuccess = mock<(Success<Photos>) -> Unit>()
-//        whenever(photosRepository.fetchPhotos(keyword, page, mockSuccess, {})).doReturn(photosResponseSuccess)
-        viewModel.fetchPhotos(keyword, page, mockSuccess, {  })
 
-        Thread.sleep(4000) // Wait network to finish call the ugly way
+        viewModel.fetchPhotos(keyword, page, mockSuccess, { })
 
+        // verify interaction
         verify(mockSuccess).invoke(photosResponseSuccess)
+    }
+
+    @Test
+    fun `get repository data with error`() {
+        val errorResponse = ErrorResponse<Photos>(Exception())
+        // return error when called
+        whenever(dataSource.fetchPhotos("", page)).thenReturn(errorResponse)
+
+        val mockError = mock<(ErrorResponse<Photos>) -> Unit>()
+        viewModel.fetchPhotos("", page, {}, mockError)
+
+        // verify interaction
+        verify(mockError).invoke(errorResponse)
     }
 }

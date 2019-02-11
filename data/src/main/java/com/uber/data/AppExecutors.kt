@@ -27,7 +27,11 @@ object AppExecutors {
     /** creates an executor for downloading images based on cpu core count */
     val imagesIO: ExecutorService = Executors.newFixedThreadPool(calculateBestThreadCount())
 
-    var mainThread: Executor = MainThreadExecutor()
+    lateinit var mainThread: Executor
+
+    fun initialize() {
+        mainThread = MainThreadExecutor()
+    }
 
     class MainThreadExecutor : Executor {
         private val mainThreadHandler = Handler(Looper.getMainLooper())

@@ -4,6 +4,7 @@ import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
 import com.uber.data.AppExecutors
+import com.uber.data.AppExecutors.mainThread
 import com.uber.data.api.ErrorResponse
 import com.uber.data.api.Success
 import com.uber.data.model.Photos
@@ -29,13 +30,12 @@ class PhotosRepositoryTest {
     @Before
     fun setup() {
         dataSource = mock()
-        dataSource.mapper = photoResponseMapper
         repository = PhotosRepository(dataSource)
-        AppExecutors.mainThread = Executor { it.run() }
+        mainThread = Executor { it.run() }
     }
 
     @Test
-    fun `get data with success`() {
+    fun `get repository data with success`() {
         val photosResponseSuccess = Success(photos)
 
         // return success when called
@@ -49,13 +49,13 @@ class PhotosRepositoryTest {
     }
 
     @Test
-    fun `get data with error`() {
+    fun `get repository data with error`() {
         val errorResponse = ErrorResponse<Photos>(Exception())
         // return error when called
-        whenever(dataSource.fetchPhotos(keyword, page)).thenReturn(errorResponse)
+        whenever(dataSource.fetchPhotos("", page)).thenReturn(errorResponse)
 
         val mockError = mock<(ErrorResponse<Photos>) -> Unit>()
-        repository.fetchPhotos(keyword, page, {}, mockError)
+        repository.fetchPhotos("", page, {}, mockError)
 
         // verify interaction
         verify(mockError).invoke(errorResponse)
